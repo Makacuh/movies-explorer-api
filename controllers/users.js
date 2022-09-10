@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { NODE_ENV, SECRET_KEY, HASH_LENGTH = 10 } = process.env;
+const { NODE_ENV, SECRET_KEY, HASH_LENGTH } = require('../utils/config');
 
 const User = require('../models/user');
 
@@ -15,6 +15,14 @@ const createUser = (req, res, next) => {
   bcrypt.hash(password, HASH_LENGTH).then((hash) => User.create({
     name, email, password: hash,
   }))
+    .then((userWithPass) => {
+      const userWithOutPass = {
+        _id: userWithPass._id,
+        name: userWithPass.name,
+        email: userWithPass.email,
+      };
+      return userWithOutPass;
+    })
     .then((user) => res.send(user))
     .catch((err) => {
       customError(err, req, res, next);

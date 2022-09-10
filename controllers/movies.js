@@ -43,7 +43,8 @@ const createMovie = (req, res, next) => {
 };
 
 const getMovies = (req, res, next) => {
-  Movie.find({})
+  const owner = req.user._id;
+  Movie.find({ owner })
     .then((movies) => res.send(movies))
     .catch((err) => {
       customError(err, req, res, next);
@@ -55,16 +56,16 @@ const deleteMovie = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Данных по указанному id нет');
     })
-    .then((card) => {
-      if (card.owner.toString() !== req.user._id) {
+    .then((movie) => {
+      if (movie.owner.toString() !== req.user._id) {
         throw new ForbiddenError('Удаляемая запись принадлежит другому пользователю');
       }
-      Movie.findByIdAndRemove(req.params.cardId)
+      Movie.findByIdAndRemove(req.params._id)
         .orFail(() => {
           throw new NotFoundError('Данных по указанному id нет');
         })
-        .then((cardForDeleting) => {
-          res.send(cardForDeleting);
+        .then((movieForDeleting) => {
+          res.send(movieForDeleting);
         })
         .catch((err) => {
           customError(err, req, res, next);

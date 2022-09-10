@@ -6,12 +6,12 @@ const {
   updateUserInfo,
 } = require('../controllers/users');
 
-router.get('users/me', getUserInfo);
+router.get('/users/me', getUserInfo);
 
 router.patch('users/me', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().email().required(),
-    about: Joi.string().min(2).max(30).required(),
+    email: Joi.string().required().email().required(),
+    name: Joi.string().min(2).max(30).required(),
   }),
 }), updateUserInfo);
 
