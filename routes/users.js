@@ -8,7 +8,7 @@ const {
 
 router.get('/users/me', getUserInfo);
 
-router.patch('users/me', celebrate({
+router.patch('/users/me', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email().required(),
     name: Joi.string().min(2).max(30).required(),
