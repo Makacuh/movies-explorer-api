@@ -1,8 +1,6 @@
 # Диплом Movies-explorer (бэкенд). 
 
-## IP address  84.252.141.183
-
-## Ссылка на сервер: (https://api.makacuh.movies.nomoredomains.sbs)
+## [Link to the server ⬅️](http://movies-api.site/)
 
 ## Функциональность:
 - Регистрация;
